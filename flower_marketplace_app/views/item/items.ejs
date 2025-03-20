@@ -1,0 +1,40 @@
+<%- include('../partials/header.ejs'); %>
+
+<main>
+    <section id="flower-intro">
+        <h2>Flowers</h2>
+        <p>Browse our selection of flowers</p>
+    </section>
+
+    <section id="items">
+        <% items.forEach(item => { %>
+            <article class="card">
+                <header>
+                    <img src="<%= item.image %>" alt="<%= item.title %>">
+                    <a href="/items/<%= item.id %>">
+                        <h3><%= item.title %></h3>
+                    </a>
+                    <p class="condition"><%= item.condition %></p>
+                </header>
+                <hr>
+                <div class="flower-info">
+                    <p>$<%= item.price %></p>
+                    <p>Sold by <%= item.seller %></p>
+                </div>
+            </article>
+        <% }); %>
+    </section>
+
+    <section id="legend">
+        <h3>Legend</h3>
+        <ul>
+            <li>Fresh: Recently picked and in peak condition</li>
+            <li>Blooming: Fully bloomed flowers at their most beautiful</li>
+            <li>Budding: Flowers that are still opening up</li>
+            <li>Wilting soon: Flowers that are about to wilt and good for immediate use</li>
+            <li>Preserved/Dried: Flowers for long-lasting arrangements</li>
+        </ul>
+    </section>
+</main>
+
+<%- include('../partials/footer.ejs'); %>

@@ -1,0 +1,26 @@
+<%- include('../partials/header.ejs') %>
+
+<div class="content">
+    <form method="POST" action="/items/<%= item.id %>?_method=PUT" class="edit-form">
+        <input type="hidden" name="_method" value="PUT">
+
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" value="<%= item.title %>" required>
+
+        <label for="seller">Seller</label>
+        <input type="text" id="seller" name="seller" value="<%= item.seller %>" required>
+
+        <label for="condition">Condition</label>
+        <input type="text" id="condition" name="condition" value="<%= item.condition %>" required>
+
+        <label for="price">Price</label>
+        <input type="text" id="price" name="price" value="<%= item.price %>" required>
+
+        <label for="details">Details</label>
+        <textarea rows="5" id="details" name="details" class="fixed-width"><%= item.details %></textarea>
+
+        <input type="submit" value="Update">
+    </form>
+</div>
+
+<%- include('../partials/footer.ejs') %>
