@@ -1,0 +1,256 @@
+:root {
+    --pink-color: #af4d6b;
+    --lightpink-color: #ecd5dc;
+    --text-color: #5B5D63;
+    --accent-color: white;
+    --secondary-color: #627466;
+    --cream-color: #faf7f0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Lexend Deca', sans-serif;
+}
+
+main {
+    flex: 1;
+}
+
+header, footer {
+    width: 100%;
+}
+
+.logo {
+    width: 16em;
+    height: 8em;
+    max-width: 100%;
+    height: auto;
+}
+
+#logo-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--pink-color);
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em 2em;
+    background-color: var(--lightpink-color);
+    color: var(--accent-color);
+    font-size: 1.25em;
+    font-weight: bold;
+}
+
+.top-bar input[type="text"] {
+    padding: 0.5em 4em;
+    border-radius: 1em;
+    border: none;
+    background-color: white;
+    color: var(--secondary-color);
+    font-size: 0.75em;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
+.error-text {
+    color: var(--secondary-color);
+    text-align: center;
+    padding: 1em 0;
+    font-size: 0.75em;
+}
+
+.menu-links {
+    list-style: none;
+    display: flex;
+    gap: 2em;
+}
+
+a {
+    text-decoration: none;
+    color: var(--pink-color);
+    cursor: pointer;
+}
+
+a:hover, a:focus {
+    color: var(--secondary-color);
+}
+
+a:active {
+    color: var(--accent-color);
+}
+
+.top-bar .search-icon {
+    color: var(--secondary-color);
+    font-size: 1em;
+}
+
+.top-bar .search-icon:hover, .top-bar .search-icon:focus {
+    color: var(--pink-color);
+}
+
+.top-bar .search-icon:active {
+    color: var(--accent-color);
+}
+
+#flower-intro {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 20em;
+    background-image: url("../images/itemsbackground2.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: var(--cream-color);
+}
+
+#flower-intro h2 {
+    font-family: 'Ms Madi', cursive;
+    font-size: 4em;
+}
+
+#flower-intro p {
+    font-size: 1.25em;
+}
+
+#items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    padding: 3em 1em;
+    gap: 1em;
+    background-color: var(--cream-color);
+}
+
+#items img {
+    width: 100%;
+    height: 40em;
+    border-radius: 8px 8px 0 0;
+}
+
+.card {
+    background-color: var(--secondary-color);
+    color: var(--cream-color);
+    width: 100%;
+    height: auto;
+    margin: 1em 0;
+    border-radius: 8px;
+    object-fit: cover;
+    display: flex;
+    flex-direction: column;
+}
+
+.card h3, .card p {
+    font-size: 1.25em;
+    text-align: start;
+    padding: 1.5em;
+}
+
+.card h3 {
+    padding: 1.5em 1.5em 0.5em 1.5em;
+}
+
+.card .condition {
+    padding: 0 0 0.5em 2em;
+    font-size: 1em;
+    text-align: end;
+    margin-right: 2em;
+}
+
+.card a {
+    color: var(--cream-color);
+}
+
+.card a:hover, .card a:focus {
+    color: var(--pink-color);
+}
+
+.card a:active {
+    color: var(--accent-color);
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid var(--cream-color);
+    margin: auto;
+    padding: 0;
+    width: 90%;
+}
+
+.flower-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#legend {
+    min-height: 10em;
+    background-color: var(--secondary-color);
+    color: var(--cream-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    padding: 1em 2em;
+    
+}
+
+#legend h3 {
+    font-family: 'Ms Madi', cursive;
+    font-size: 2em;
+    margin: 0;
+}
+
+#legend ul {
+    font-size: 1em;
+    list-style: none;
+    text-align: center;
+    line-height: 1.5;
+}
+
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em 2em;
+    background-color: var(--lightpink-color);
+    color: var(--text-color);
+    font-size: 1em;
+    gap: 2em;
+    font-size: 1em;
+}
+
+.contact-links {
+    list-style: none;
+    display: flex;
+    gap: 2em;
+}
