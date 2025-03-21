@@ -13,9 +13,10 @@ let port = 3000;
 let host = 'localhost';
 let url = 'mongodb://localhost:27017/demos';
 app.set('view engine', 'ejs');
+const mongoUri = 'mongodb+srv://achen24:935112802Alch@cluster0.jy8c4.mongodb.net/demos?retryWrites=true&w=majority&appName=Cluster0'
 
 //connect to MongoDB
-mongoose.connect(url)
+mongoose.connect(mongoUri)
 .then(()=>{
     //start the server
     app.listen(port, host, ()=>{
