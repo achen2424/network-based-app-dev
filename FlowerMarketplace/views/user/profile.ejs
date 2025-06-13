@@ -1,0 +1,68 @@
+<%- include('../partials/header.ejs') %>
+<link rel="stylesheet" href="/css/profile.css">
+<main class="profile-container">
+    <h1>My Listings</h1>
+    
+    <div class="listings-grid">
+        <div class="grid-header">
+            <div>Item</div>
+            <div>Status</div>
+            <div>Action</div>
+        </div>
+        
+        <% if (items && items.length > 0) { %>
+            <% items.forEach(item => { %>
+                <div class="grid-row">
+                    <div class="item-title"><%= item.title %></div>
+                    <div class="item-status <%= item.active ? 'active' : 'inactive' %>">
+                        <%= item.active ? 'active' : 'inactive' %>
+                    </div>
+                    <div class="item-actions">
+                        <a href="/items/<%= item._id %>/edit" class="edit-btn">
+                            <i class="fa-regular fa-pen-to-square"></i> Edit
+                        </a>
+                        <form action="/items/<%= item._id %>?_method=DELETE" method="POST">
+                            <button type="submit" class="delete-btn">
+                                <i class="fa-regular fa-trash-can"></i> Delete
+                            </button>
+                        </form>
+                        <% if (item.active) { %>
+                            <a href="/items/<%= item._id %>/offers" class="offers-btn">
+                                View Offers
+                            </a>
+                        <% } %>
+                    </div>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <div class="no-items">No listings yet</div>
+        <% } %>
+    </div>
+
+    <h1 class="offers-heading">My Offers</h1>
+    
+    <div class="listings-grid">
+        <div class="grid-header">
+            <div>Item</div>
+            <div>Amount</div>
+            <div>Status</div>
+        </div>
+        
+        <% if (offers && offers.length > 0) { %>
+            <% offers.forEach(offer => { %>
+                <div class="grid-row">
+                    <div class="item-title">
+                        <a href="/items/<%= offer.item._id %>"><%= offer.item.title %></a>
+                    </div>
+                    <div class="offer-amount">$<%= offer.amount.toFixed(2) %></div>
+                    <div class="offer-status <%= offer.status.toLowerCase() %>">
+                        <%= offer.status %>
+                    </div>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <div class="no-items">No offers made yet</div>
+        <% } %>
+    </div>
+</main>
+<%- include('../partials/footer.ejs') %>

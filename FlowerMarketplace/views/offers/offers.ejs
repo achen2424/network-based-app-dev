@@ -1,0 +1,60 @@
+<%- include('../partials/header.ejs', {cssFile: 'offers.css'}) %>
+
+<div class="container">
+    <h1>Offers for <%= item.title %></h1>
+    <div class="offer-stats">
+        <div class="stat-item">
+            <div class="stat-value"><%= offers.length %></div>
+            <div class="stat-label">Total Offers</div>
+        </div>
+        <% if (item.active) { %>
+            <div class="stat-item">
+                <div class="stat-value">$<%= item.highestOffer.toFixed(2) %></div>
+                <div class="stat-label">Highest Offer</div>
+            </div>
+        <% } %>
+    </div>
+    <% if (offers.length > 0) { %>
+        <div class="offers-list">
+            <% offers.forEach(offer => { %>
+                <div class="offer-card">
+                    <div class="offer-header">
+                        <div class="offer-buyer">
+                            <%= offer.buyer.firstName %> <%= offer.buyer.lastName %>
+                        </div>
+                        <div class="offer-amount">
+                            $<%= offer.amount.toFixed(2) %>
+                        </div>
+                    </div>
+                    
+                    <div class="offer-footer">
+                        <% if (item.active) { %>
+                            <div class="offer-actions">
+                                <form action="/items/<%= item._id %>/offers/<%= offer._id %>/accept" method="POST" class="inline-form">
+                                    <button type="submit" class="btn-accept">Accept</button>
+                                </form>
+                                <form action="/items/<%= item._id %>/offers/<%= offer._id %>/reject" method="POST" class="inline-form">
+                                    <button type="submit" class="btn-reject">Reject</button>
+                                </form>
+                            </div>
+                        <% } else { %>
+                            <div class="offer-status <%= offer.status.toLowerCase() %>">
+                                <%= offer.status %>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    <% } else { %>
+        <div class="no-offers">
+            No offers have been made for this item yet.
+        </div>
+    <% } %>
+
+    <a href="/items/<%= item._id %>" class="btn-back">
+        <i class="fa-solid fa-arrow-left"></i> Back to Item
+    </a>
+</div>
+
+<%- include('../partials/footer.ejs') %>

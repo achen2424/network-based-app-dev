@@ -1,0 +1,115 @@
+:root {
+    --pink-color: #af4d6b;
+    --lightpink-color: #ecd5dc;
+    --text-color: #5B5D63;
+    --accent-color: white;
+    --secondary-color: #627466;
+    --cream-color: #faf7f0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--cream-color);
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2em;
+}
+
+.search-icon {
+    background: none;
+    border: none;
+    color: var(--pink-color);
+    font-size: 1.2em;
+    cursor: pointer;
+    padding: 0.3em;
+}
+
+.user-form-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.user-form {
+    background-color: var(--accent-color);
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: var(--secondary-color);
+}
+
+.user-form label {
+    display: block;
+    margin: 1em 0 0.5em;
+    font-weight: bold;
+    color: var(--secondary-color);
+}
+
+.user-form input[type="email"],
+.user-form input[type="password"] {
+    width: 100%;
+    padding: 0.75em;
+    border: 1px solid var(--lightpink-color);
+    border-radius: 4px;
+    font-family: 'Lexend Deca', sans-serif;
+    font-size: 1em;
+    color: var(--text-color);
+}
+
+.user-form input[type="submit"] {
+    background-color: var(--pink-color);
+    color: var(--accent-color);
+    padding: 0.75em 2em;
+    border: none;
+    border-radius: 4px;
+    margin-top: 1.5em;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+.user-form input[type="submit"]:hover {
+    background-color: var(--secondary-color);
+}
+
+.user-form input:focus {
+    outline: none;
+    border-color: var(--pink-color);
+    box-shadow: 0 0 0 2px rgba(175, 77, 107, 0.2);
+}
+
+.login-links {
+    margin-top: 1.5em;
+    text-align: center;
+}
+
+.login-links a {
+    color: var(--pink-color);
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+.login-links a:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+
+.error-message {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 0.75em;
+    border-radius: 4px;
+    margin-bottom: 1em;
+    font-size: 0.9em;
+    text-align: center;
+}

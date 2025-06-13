@@ -1,0 +1,30 @@
+<%- include('../partials/header.ejs') %>
+<link rel="stylesheet" href="/css/edit.css">
+
+<div class="content">
+    <form method="POST" action="/items/<%= item.id %>?_method=PUT" class="edit-form">
+        <input type="hidden" name="_method" value="PUT">
+
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" value="<%= item.title %>" required>
+
+        <label for="condition">Condition</label>
+        <select id="condition" name="condition" required>
+            <option value="Fresh" <%= item.condition === 'Fresh' ? 'selected' : '' %>>Fresh</option>
+            <option value="Blooming" <%= item.condition === 'Blooming' ? 'selected' : '' %>>Blooming</option>
+            <option value="Budding" <%= item.condition === 'Budding' ? 'selected' : '' %>>Budding</option>
+            <option value="Wilting Soon" <%= item.condition === 'Wilting Soon' ? 'selected' : '' %>>Wilting Soon</option>
+            <option value="Preserved/Dried" <%= item.condition === 'Preserved/Dried' ? 'selected' : '' %>>Preserved/Dried</option>
+        </select>
+
+        <label for="price">Price</label>
+        <input type="text" id="price" name="price" value="<%= item.price %>" required>
+
+        <label for="details">Details</label>
+        <textarea rows="5" id="details" name="details" class="fixed-width"><%= item.details %></textarea>
+
+        <input type="submit" value="Update">
+    </form>
+</div>
+
+<%- include('../partials/footer.ejs') %>

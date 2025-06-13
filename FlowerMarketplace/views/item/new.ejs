@@ -1,0 +1,41 @@
+<%- include('../partials/header.ejs'); %>
+    <main>
+        <section id="sell-section">
+            <div class="sell-description">
+                <h2>Sell At Wonderland Marketplace</h2>
+                <p>Simply take a picture with your phone and create a listing in less than a minute!</p>
+            </div>
+                <form action="/items" method="POST">
+                    <div class="category">
+                        <div class="category-row">
+                            <p>Condition</p>
+                            <select id="condition" name="condition" required>
+                                <option value="fresh">Fresh</option>
+                                <option value="blooming">Blooming</option>
+                                <option value="budding">Budding</option>
+                                <option value="wilting soon">Wilting Soon</option>
+                                <option value="preserved/dried">Preserved/Dried</option>
+                            </select>
+                        </div>
+                        <div class="category-row">
+                            <p>Title</p>
+                            <input type="text" id="title" name="title" required>
+                        </div>
+                        <div class="category-row">
+                            <p>Price</p>
+                            <input type="number" id="price" name="price" min="0.00" step="0.01" max="9999.99" required>
+                        </div>
+                        <div class="category-row">
+                            <p>Details</p>
+                            <textarea id="details" name="details" required></textarea>
+                        </div>
+                        <div class="category-row">
+                            <p>Image</p>
+                            <input type="text" id="image" name="image" placeholder="Enter image path (e.g., /images/default.jpg)" required>
+                        </div>
+                        <input type="submit" value="Submit">
+                    </div>
+                </form>
+        </section>
+    </main>
+    <%- include('../partials/footer.ejs'); %>

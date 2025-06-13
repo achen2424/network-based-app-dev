@@ -1,0 +1,50 @@
+<%- include('../partials/header.ejs'); %>
+<main>
+    <section id="item">
+        <img src="<%= item.image || '/images/default.jpg' %>" class="item-image" alt="<%= item.title %>">
+        <div class="item-info">
+            <h2><%= item.title %></h2>
+            <p>Condition: <%= item.condition %></p>
+            <p>Price: $<%= item.price.toFixed(2) %></p>
+            <p>Seller: 
+              <% if (item.seller) { %>
+                <%= item.seller.firstName %> <%= item.seller.lastName %>
+              <% } else { %>
+                Unknown Seller
+              <% } %>
+            </p>
+            <p><%= item.details %></p>
+            
+            <% if (item.active) { %>
+                <div class="offer-info">
+                    <h3>Offer Information</h3>
+                    <p>Total Offers: <%= item.totalOffers %></p>
+                    <% if (item.totalOffers > 0) { %>
+                        <p>Highest Offer: $<%= item.highestOffer.toFixed(2) %></p>
+                    <% } %>
+                    
+                    <% if (user) { %>
+                        <% const isOwner = user.toString() === item.seller._id.toString(); %>
+                        <% if (isOwner && item.totalOffers > 0) { %>
+                            <a href="/items/<%= item._id %>/offers" class="btn-view-offers">
+                                View Offers
+                            </a>
+                        <% } else if (!isOwner) { %>
+                            <form action="/items/<%= item._id %>/offers" method="POST" class="offer-form">
+                                <input type="number" step="0.01" min="0.01" name="amount" placeholder="Enter your offer" required>
+                                <button type="submit" class="btn-submit-offer">Submit Offer</button>
+                            </form>
+                        <% } %>
+                    <% } else if (item.active) { %>
+                        <p class="login-prompt">Please <a href="/users/login">log in</a> to make an offer.</p>
+                    <% } %>
+                </div>
+            <% } else { %>
+                <div class="item-inactive">
+                    <p>This item is no longer available.</p>
+                </div>
+            <% } %>
+        </section>
+    </main>
+
+<%- include('../partials/footer.ejs'); %>
