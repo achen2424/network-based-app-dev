@@ -1,104 +1,115 @@
 const model = require('../models/model');
 
-exports.index = (req, res) => {
-    let items = model.find();
-    const searchTerm = req.query.q; 
+exports.index = (req, res, next) => {
+    let searchTerm = req.query.q;
+    let filter = { active: true };
 
     if (searchTerm) {
-        const lowerCaseSearchTerm = searchTerm.toLowerCase();
-        items = items.filter(item => 
-            item.title.toLowerCase().includes(lowerCaseSearchTerm) || 
-            item.details.toLowerCase().includes(lowerCaseSearchTerm)
-        );
+        const regex = new RegExp(searchTerm, 'i');
+        filter.$or = [{ title: regex }, { details: regex }];
     }
 
-    // Sort by price
-    items.sort((a, b) => a.price - b.price);
-
-    res.render('item/items', { items, cssFile: 'items.css' });
+    model.find(filter).sort({ price: 1 })
+        .then(items => res.render('item/items', { items, cssFile: 'items.css' }))
+        .catch(err => next(err));
 };
 
 exports.new = (req, res) => {
     res.render('item/new', { cssFile: 'new.css' });
-}
-
-exports.create = (req, res) => {
-    let newItem = {
-        id: model.nextId(), 
-        title: req.body.title,
-        seller: req.body.seller,
-        condition: req.body.condition,
-        price: req.body.price,
-        details: req.body.details,
-        image: req.body.image || "../images/default.jpg", 
-        active: true
-    };
-
-    model.save(newItem); 
-    res.redirect('/items');
 };
 
-exports.show =(req, res, next) => {
-    let id = req.params.id;
-    let item = model.findById(id);
-    if(item){
-        res.render('item/item', { item, cssFile: 'item.css' });
-    } else {
-        let err = new Error('Cannot find an item with id ' + id);
-        err.status = 404;
+exports.create = (req, res, next) => {
+    let newItem = new model({
+        title: req.body.title,
+        seller: req.body.seller,
+        condition: formatCondition(req.body.condition),
+        price: req.body.price,
+        details: req.body.details,
+        image: req.body.image || "/images/default.jpg",
+        active: true
+    });
+
+    newItem.save()
+    .then(() => res.redirect('/items'))
+    .catch(err => {
+        if (err.name === 'ValidationError') {
+            err.status = 400;
+        }
         next(err);
-    }
+    });
+};
+
+exports.show = (req, res, next) => {
+    model.findById(req.params.id)
+    .then(item => {
+        if (item) {
+            res.render('item/item', { item, cssFile: 'item.css' });
+        } else {
+            let err = new Error('Cannot find an item with id ' + req.params.id);
+            err.status = 404;
+            next(err);
+        }
+    })
+    .catch(err => next(err));
 };
 
 exports.edit = (req, res, next) => {
-    let id = req.params.id;
-    let item = model.findById(id);
-    if(item){
-        res.render('item/edit', { item, cssFile: 'styles.css' });
-    } else {
-        let err = new Error('Cannot find an item with id ' + id);
-        err.status = 404;
-        next(err);
-    }
+    model.findById(req.params.id)
+    .then(item => {
+        if (item) {
+            res.render('item/edit', { item, cssFile: 'styles.css' });
+        } else {
+            let err = new Error('Cannot find an item with id ' + req.params.id);
+            err.status = 404;
+            next(err);
+        }
+    })
+    .catch(err => next(err));
 };
 
 exports.update = (req, res, next) => {
-    let id = req.params.id;
-    let item = model.findById(id);
-
-    if (!item) {
-        let err = new Error('Cannot find an item with id ' + id);
-        err.status = 404;
-        return next(err);
-    }
-
     let updatedItem = {
-        id: item.id, 
         title: req.body.title,
         seller: req.body.seller,
         condition: req.body.condition,
         price: req.body.price,
         details: req.body.details,
-        image: req.body.image || item.image,
-        active: item.active 
+        image: req.body.image
     };
 
-    model.updateById(id, updatedItem);
-    res.redirect('/items/' + id);
+    model.findByIdAndUpdate(req.params.id, updatedItem, { runValidators: true })
+    .then(item => {
+        if (item) {
+            res.redirect('/items/' + req.params.id);
+        } else {
+            let err = new Error('Cannot find an item with id ' + req.params.id);
+            err.status = 404;
+            next(err);
+        }
+    })
+    .catch(err => {
+        if (err.name === 'ValidationError') {
+            err.status = 400;
+        }
+        next(err);
+    });
 };
 
+function formatCondition(condition) {
+    const validConditions = ['Fresh', 'Blooming', 'Budding', 'Wilting Soon', 'Preserved/Dried'];
+    return validConditions.find(c => c.toLowerCase() === condition.toLowerCase()) || 'Fresh';
+}
+
 exports.delete = (req, res, next) => {
-    let id = req.params.id;
-    let item = model.findById(id);
-
-    if (!item) {
-        let err = new Error('Cannot find an item with id ' + id);
-        err.status = 404;
-        return next(err);
-    }
-
-    item.active = false; 
-    model.updateById(id, item);
-
-    res.redirect('/items');
+    model.findByIdAndDelete(req.params.id)
+    .then(item => {
+        if (item) {
+            res.redirect('/items');
+        } else {
+            let err = new Error('Cannot find an item with id ' + req.params.id);
+            err.status = 404;
+            next(err);
+        }
+    })
+    .catch(err => next(err));
 };

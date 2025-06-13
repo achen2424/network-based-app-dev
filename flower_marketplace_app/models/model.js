@@ -1,4 +1,4 @@
-const items = [
+/*const items = [
     {
         id: 1,
         title: "Rose",
@@ -59,40 +59,22 @@ const items = [
         image: "../images/iris.jpg",
         active: true
     }
-]
-
-exports.find = () => items.filter(item => item.active);
-exports.findById = (id) => items.find(item => item.id == id);
-exports.findAll = () => items;
-
-exports.nextId = () => {
-    return items.length ? Math.max(...items.map(item => item.id)) + 1 : 1;
-};
-
-exports.save = (item) => {
-    item.active = true;
-    items.push(item);
-};
-
-exports.updateById = (id, newItem) => {
-    let index = items.findIndex(item => item.id == id);
-    if (index !== -1) {
-        newItem.image = newItem.image || items[index].image;
-        items[index] = { ...items[index], ...newItem };
-        return true;
-    }
-    return false;
-};
-
-exports.deleteById = (id) => {
-    let index = items.findIndex(item => item.id == id);
-    if (index !== -1) {
-        items.splice(index, 1);
-        return true;
-    }
-    return false;
-};
-
-exports.addItem = (item) => {
-    items.push(item);
-};
+] */
+    const mongoose = require('mongoose');
+    const Schema = mongoose.Schema;
+    
+    const itemSchema = new Schema({
+        title: {type: String, required: [true, 'title is required']},
+        seller: {type: String, required: [true, 'author is required']},
+        condition: {type: String, required: [true, 'condition is required'], 
+            enum: ['Fresh', 'Blooming', 'Budding', 'Wilting Soon', 'Preserved/Dried']},
+        price: {type: Number, required: [true, 'price is required'], min: 0.01},
+        details: {type: String, required: [true, 'content is required'], 
+            minLength: [10, 'content should have at least 10 characters']},
+        image: {type: String, required: [true, 'image is required'], default: "/images/default.jpg" },
+        active: {type: Boolean, default: true, required: [true, 'active is required']}
+    },
+    {timestamps: true}
+    );
+    
+    module.exports = mongoose.model('Item', itemSchema);
